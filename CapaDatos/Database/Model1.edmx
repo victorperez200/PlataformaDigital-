@@ -1,0 +1,510 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PlatformDigitalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cursos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Seccion" Type="int" Nullable="false" />
+          <Property Name="ProfesorId" Type="int" />
+          <Property Name="FechaInicio" Type="datetime" Nullable="false" />
+          <Property Name="FechaFin" Type="datetime" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cursos_Estudiantes">
+          <Key>
+            <PropertyRef Name="CursoId" />
+            <PropertyRef Name="EstudianteId" />
+          </Key>
+          <Property Name="CursoId" Type="int" Nullable="false" />
+          <Property Name="EstudianteId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Entregables">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TareaId" Type="int" Nullable="false" />
+          <Property Name="EstudianteId" Type="int" Nullable="false" />
+          <Property Name="NombreDocumento" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Extension" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Estudiantes">
+          <Key>
+            <PropertyRef Name="UsuarioId" />
+          </Key>
+          <Property Name="UsuarioId" Type="int" Nullable="false" />
+          <Property Name="Matricula" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tareas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Descripcion" Type="text" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+          <Property Name="FechaVencimiento" Type="datetime" Nullable="false" />
+          <Property Name="CursoId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TipoUsuarios">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Apellido" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Contrasena" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="TipoUsuarioId" Type="int" Nullable="false" />
+          <Property Name="Activo" Type="bit" />
+          <Property Name="FechaRegistro" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__Cursos__Profesor__3E52440B">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <End Role="Cursos" Type="Self.Cursos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cursos">
+              <PropertyRef Name="ProfesorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cursos_Es__Curso__4222D4EF">
+          <End Role="Cursos" Type="Self.Cursos" Multiplicity="1" />
+          <End Role="Cursos_Estudiantes" Type="Self.Cursos_Estudiantes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cursos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cursos_Estudiantes">
+              <PropertyRef Name="CursoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cursos_Es__Estud__412EB0B6">
+          <End Role="Estudiantes" Type="Self.Estudiantes" Multiplicity="1" />
+          <End Role="Cursos_Estudiantes" Type="Self.Cursos_Estudiantes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estudiantes">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Cursos_Estudiantes">
+              <PropertyRef Name="EstudianteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Entregabl__Estud__4AB81AF0">
+          <End Role="Estudiantes" Type="Self.Estudiantes" Multiplicity="1" />
+          <End Role="Entregables" Type="Self.Entregables" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estudiantes">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Entregables">
+              <PropertyRef Name="EstudianteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Entregabl__Tarea__49C3F6B7">
+          <End Role="Tareas" Type="Self.Tareas" Multiplicity="1" />
+          <End Role="Entregables" Type="Self.Entregables" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tareas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Entregables">
+              <PropertyRef Name="TareaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Estudiant__Usuar__3B75D760">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Estudiantes" Type="Self.Estudiantes" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Estudiantes">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tareas__CursoId__45F365D3">
+          <End Role="Cursos" Type="Self.Cursos" Multiplicity="1" />
+          <End Role="Tareas" Type="Self.Tareas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cursos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tareas">
+              <PropertyRef Name="CursoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Usuarios__TipoUs__38996AB5">
+          <End Role="TipoUsuarios" Type="Self.TipoUsuarios" Multiplicity="1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoUsuarios">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="TipoUsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PlatformDigitalModelStoreContainer">
+          <EntitySet Name="Cursos" EntityType="Self.Cursos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cursos_Estudiantes" EntityType="Self.Cursos_Estudiantes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Entregables" EntityType="Self.Entregables" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estudiantes" EntityType="Self.Estudiantes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tareas" EntityType="Self.Tareas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoUsuarios" EntityType="Self.TipoUsuarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Cursos__Profesor__3E52440B" Association="Self.FK__Cursos__Profesor__3E52440B">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Cursos" EntitySet="Cursos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cursos_Es__Curso__4222D4EF" Association="Self.FK__Cursos_Es__Curso__4222D4EF">
+            <End Role="Cursos" EntitySet="Cursos" />
+            <End Role="Cursos_Estudiantes" EntitySet="Cursos_Estudiantes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cursos_Es__Estud__412EB0B6" Association="Self.FK__Cursos_Es__Estud__412EB0B6">
+            <End Role="Estudiantes" EntitySet="Estudiantes" />
+            <End Role="Cursos_Estudiantes" EntitySet="Cursos_Estudiantes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Entregabl__Estud__4AB81AF0" Association="Self.FK__Entregabl__Estud__4AB81AF0">
+            <End Role="Estudiantes" EntitySet="Estudiantes" />
+            <End Role="Entregables" EntitySet="Entregables" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Entregabl__Tarea__49C3F6B7" Association="Self.FK__Entregabl__Tarea__49C3F6B7">
+            <End Role="Tareas" EntitySet="Tareas" />
+            <End Role="Entregables" EntitySet="Entregables" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Estudiant__Usuar__3B75D760" Association="Self.FK__Estudiant__Usuar__3B75D760">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Estudiantes" EntitySet="Estudiantes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tareas__CursoId__45F365D3" Association="Self.FK__Tareas__CursoId__45F365D3">
+            <End Role="Cursos" EntitySet="Cursos" />
+            <End Role="Tareas" EntitySet="Tareas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Usuarios__TipoUs__38996AB5" Association="Self.FK__Usuarios__TipoUs__38996AB5">
+            <End Role="TipoUsuarios" EntitySet="TipoUsuarios" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PlatformDigitalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cursos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Seccion" Type="Int32" Nullable="false" />
+          <Property Name="ProfesorId" Type="Int32" />
+          <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaFin" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK__Cursos__Profesor__3E52440B" FromRole="Cursos" ToRole="Usuarios" />
+          <NavigationProperty Name="Tareas" Relationship="Self.FK__Tareas__CursoId__45F365D3" FromRole="Cursos" ToRole="Tareas" />
+          <NavigationProperty Name="Estudiantes" Relationship="Self.Cursos_Estudiantes" FromRole="Cursos" ToRole="Estudiantes" />
+        </EntityType>
+        <EntityType Name="Entregables">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TareaId" Type="Int32" Nullable="false" />
+          <Property Name="EstudianteId" Type="Int32" Nullable="false" />
+          <Property Name="NombreDocumento" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Extension" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Estudiantes" Relationship="Self.FK__Entregabl__Estud__4AB81AF0" FromRole="Entregables" ToRole="Estudiantes" />
+          <NavigationProperty Name="Tareas" Relationship="Self.FK__Entregabl__Tarea__49C3F6B7" FromRole="Entregables" ToRole="Tareas" />
+        </EntityType>
+        <EntityType Name="Estudiantes">
+          <Key>
+            <PropertyRef Name="UsuarioId" />
+          </Key>
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <Property Name="Matricula" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Entregables" Relationship="Self.FK__Entregabl__Estud__4AB81AF0" FromRole="Estudiantes" ToRole="Entregables" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK__Estudiant__Usuar__3B75D760" FromRole="Estudiantes" ToRole="Usuarios" />
+          <NavigationProperty Name="Cursos" Relationship="Self.Cursos_Estudiantes" FromRole="Estudiantes" ToRole="Cursos" />
+        </EntityType>
+        <EntityType Name="Tareas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaVencimiento" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CursoId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cursos" Relationship="Self.FK__Tareas__CursoId__45F365D3" FromRole="Tareas" ToRole="Cursos" />
+          <NavigationProperty Name="Entregables" Relationship="Self.FK__Entregabl__Tarea__49C3F6B7" FromRole="Tareas" ToRole="Entregables" />
+        </EntityType>
+        <EntityType Name="TipoUsuarios">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK__Usuarios__TipoUs__38996AB5" FromRole="TipoUsuarios" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Apellido" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Contrasena" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TipoUsuarioId" Type="Int32" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" />
+          <Property Name="FechaRegistro" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Cursos" Relationship="Self.FK__Cursos__Profesor__3E52440B" FromRole="Usuarios" ToRole="Cursos" />
+          <NavigationProperty Name="Estudiantes" Relationship="Self.FK__Estudiant__Usuar__3B75D760" FromRole="Usuarios" ToRole="Estudiantes" />
+          <NavigationProperty Name="TipoUsuarios" Relationship="Self.FK__Usuarios__TipoUs__38996AB5" FromRole="Usuarios" ToRole="TipoUsuarios" />
+        </EntityType>
+        <Association Name="FK__Cursos__Profesor__3E52440B">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <End Role="Cursos" Type="Self.Cursos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cursos">
+              <PropertyRef Name="ProfesorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tareas__CursoId__45F365D3">
+          <End Role="Cursos" Type="Self.Cursos" Multiplicity="1" />
+          <End Role="Tareas" Type="Self.Tareas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cursos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tareas">
+              <PropertyRef Name="CursoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Entregabl__Estud__4AB81AF0">
+          <End Role="Estudiantes" Type="Self.Estudiantes" Multiplicity="1" />
+          <End Role="Entregables" Type="Self.Entregables" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estudiantes">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Entregables">
+              <PropertyRef Name="EstudianteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Entregabl__Tarea__49C3F6B7">
+          <End Role="Tareas" Type="Self.Tareas" Multiplicity="1" />
+          <End Role="Entregables" Type="Self.Entregables" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tareas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Entregables">
+              <PropertyRef Name="TareaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Estudiant__Usuar__3B75D760">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Estudiantes" Type="Self.Estudiantes" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Estudiantes">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Usuarios__TipoUs__38996AB5">
+          <End Role="TipoUsuarios" Type="Self.TipoUsuarios" Multiplicity="1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoUsuarios">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="TipoUsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Cursos_Estudiantes">
+          <End Role="Cursos" Type="Self.Cursos" Multiplicity="*" />
+          <End Role="Estudiantes" Type="Self.Estudiantes" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="PlatformDigitalEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cursos" EntityType="Self.Cursos" />
+          <EntitySet Name="Entregables" EntityType="Self.Entregables" />
+          <EntitySet Name="Estudiantes" EntityType="Self.Estudiantes" />
+          <EntitySet Name="Tareas" EntityType="Self.Tareas" />
+          <EntitySet Name="TipoUsuarios" EntityType="Self.TipoUsuarios" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
+          <AssociationSet Name="FK__Cursos__Profesor__3E52440B" Association="Self.FK__Cursos__Profesor__3E52440B">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Cursos" EntitySet="Cursos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tareas__CursoId__45F365D3" Association="Self.FK__Tareas__CursoId__45F365D3">
+            <End Role="Cursos" EntitySet="Cursos" />
+            <End Role="Tareas" EntitySet="Tareas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Entregabl__Estud__4AB81AF0" Association="Self.FK__Entregabl__Estud__4AB81AF0">
+            <End Role="Estudiantes" EntitySet="Estudiantes" />
+            <End Role="Entregables" EntitySet="Entregables" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Entregabl__Tarea__49C3F6B7" Association="Self.FK__Entregabl__Tarea__49C3F6B7">
+            <End Role="Tareas" EntitySet="Tareas" />
+            <End Role="Entregables" EntitySet="Entregables" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Estudiant__Usuar__3B75D760" Association="Self.FK__Estudiant__Usuar__3B75D760">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Estudiantes" EntitySet="Estudiantes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Usuarios__TipoUs__38996AB5" Association="Self.FK__Usuarios__TipoUs__38996AB5">
+            <End Role="TipoUsuarios" EntitySet="TipoUsuarios" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="Cursos_Estudiantes" Association="Self.Cursos_Estudiantes">
+            <End Role="Cursos" EntitySet="Cursos" />
+            <End Role="Estudiantes" EntitySet="Estudiantes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PlatformDigitalModelStoreContainer" CdmEntityContainer="PlatformDigitalEntities">
+          <EntitySetMapping Name="Cursos">
+            <EntityTypeMapping TypeName="PlatformDigitalModel.Cursos">
+              <MappingFragment StoreEntitySet="Cursos">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Seccion" ColumnName="Seccion" />
+                <ScalarProperty Name="ProfesorId" ColumnName="ProfesorId" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Entregables">
+            <EntityTypeMapping TypeName="PlatformDigitalModel.Entregables">
+              <MappingFragment StoreEntitySet="Entregables">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TareaId" ColumnName="TareaId" />
+                <ScalarProperty Name="EstudianteId" ColumnName="EstudianteId" />
+                <ScalarProperty Name="NombreDocumento" ColumnName="NombreDocumento" />
+                <ScalarProperty Name="Extension" ColumnName="Extension" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estudiantes">
+            <EntityTypeMapping TypeName="PlatformDigitalModel.Estudiantes">
+              <MappingFragment StoreEntitySet="Estudiantes">
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="Matricula" ColumnName="Matricula" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tareas">
+            <EntityTypeMapping TypeName="PlatformDigitalModel.Tareas">
+              <MappingFragment StoreEntitySet="Tareas">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="FechaVencimiento" ColumnName="FechaVencimiento" />
+                <ScalarProperty Name="CursoId" ColumnName="CursoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoUsuarios">
+            <EntityTypeMapping TypeName="PlatformDigitalModel.TipoUsuarios">
+              <MappingFragment StoreEntitySet="TipoUsuarios">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="PlatformDigitalModel.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
+                <ScalarProperty Name="TipoUsuarioId" ColumnName="TipoUsuarioId" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Cursos_Estudiantes" TypeName="PlatformDigitalModel.Cursos_Estudiantes" StoreEntitySet="Cursos_Estudiantes">
+            <EndProperty Name="Cursos">
+              <ScalarProperty Name="Id" ColumnName="CursoId" />
+            </EndProperty>
+            <EndProperty Name="Estudiantes">
+              <ScalarProperty Name="UsuarioId" ColumnName="EstudianteId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
