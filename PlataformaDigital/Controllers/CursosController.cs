@@ -105,5 +105,11 @@ namespace PlataformaDigital.Controllers
                 return View();
             }
         }
+        // GET: Cursos/CursosPorProfesor/5
+        public ActionResult CursosPorProfesor(int profesorId)
+        {
+            var cursos = cursoServicio.GetCursos().Where(c => c.ProfesorId == profesorId).ToList();
+            return View(cursos);
+        }
     }
 }
