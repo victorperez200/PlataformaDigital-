@@ -1,0 +1,55 @@
+﻿@model CapaDatos.Database.Tareas
+
+@{
+    ViewBag.Title = "Detalles de Tarea";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="mb-0">
+                    <i class="fas fa-info-circle me-2"></i>@ViewBag.Title
+                </h3>
+                @Html.ActionLink("Editar", "Edit", new { id = Model.Id }, new { @class = "btn btn-light btn-sm" })
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="fw-bold">Nombre:</label>
+                        <p class="form-control-plaintext">@Html.DisplayFor(model => model.Nombre)</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="fw-bold">Descripción:</label>
+                        <p class="form-control-plaintext">@Html.DisplayFor(model => model.Descripcion)</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="fw-bold">Fecha Creación:</label>
+                        <p class="form-control-plaintext">@Html.DisplayFor(model => model.FechaCreacion)</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="fw-bold">Fecha Vencimiento:</label>
+                        <p class="form-control-plaintext">@Html.DisplayFor(model => model.FechaVencimiento)</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="fw-bold">Curso:</label>
+                        <p class="form-control-plaintext">@Html.DisplayFor(model => model.Cursos.Descripcion)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer bg-light">
+            @Html.ActionLink("Volver al listado", "Index", null, new { @class = "btn btn-outline-secondary" })
+        </div>
+    </div>
+</div>

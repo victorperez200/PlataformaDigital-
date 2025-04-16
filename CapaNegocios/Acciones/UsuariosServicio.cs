@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CapaDatos.Clases;
 using CapaDatos.Database;
 
@@ -30,6 +31,11 @@ namespace CapaNegocios.Acciones
         public void Update(Usuarios usuarios)
         {
             data.Update(usuarios);
+        }
+
+        public static object GetList()
+        {
+            throw new NotImplementedException();
         }
     }
 }

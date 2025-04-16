@@ -8,40 +8,38 @@ using CapaNegocios.Acciones;
 
 namespace PlataformaDigital.Controllers
 {
-    public class CursosController : Controller
+    public class TareasController : Controller
     {
+        TareaServicio tareaServicio = new TareaServicio();
         CursoServicio cursoServicio = new CursoServicio();
-        ProfesorServicio profesorServicio = new ProfesorServicio();
 
-        // GET: Cursos
+        // GET: Tareas
         public ActionResult Index()
         {
-            return View(cursoServicio.GetCursos());
+            return View(tareaServicio.GetTareas());
         }
 
-        // GET: Cursos/Details/5
+        // GET: Tareas/Details/5
         public ActionResult Details(int id)
         {
-            return View(cursoServicio.GetById(id));
+            return View(tareaServicio.GetById(id));
         }
 
-        // GET: Cursos/Create
+        // GET: Tareas/Create
         public ActionResult Create()
         {
-          var profesores = profesorServicio.GetList();
-
-           ViewData["ProfesorId"] = new SelectList(profesores, "Id", "Nombre");
+            ViewData["CursoId"] = new SelectList(cursoServicio.GetCursos(), "Id", "Descripcion");
             return View();
         }
 
-        // POST: Cursos/Create
+        // POST: Tareas/Create
         [HttpPost]
-        public ActionResult Create(Cursos cursos)
+        public ActionResult Create(Tareas tareas)
         {
             try
             {
                 // TODO: Add insert logic here
-                cursoServicio.Add(cursos);
+                tareaServicio.Add(tareas);
                 return RedirectToAction("Index");
             }
             catch
@@ -50,26 +48,21 @@ namespace PlataformaDigital.Controllers
             }
         }
 
-        // GET: Cursos/Edit/5
+        // GET: Tareas/Edit/5
         public ActionResult Edit(int id)
         {
-            var profesores = profesorServicio.GetList();
-
-          ViewData["ProfesorId"] = new SelectList(profesores, "Id", "Nombre");
-
-            var curso = cursoServicio.GetById(id);
-
-            return View(curso);
+            ViewData["CursoId"] = new SelectList(cursoServicio.GetCursos(), "Id", "Nombre");
+            return View(tareaServicio.GetById(id));
         }
 
-        // POST: Cursos/Edit/5
+        // POST: Tareas/Edit/5
         [HttpPost]
-        public ActionResult Edit(Cursos cursos)
+        public ActionResult Edit(Tareas tareas)
         {
             try
             {
                 // TODO: Add update logic here
-                cursoServicio.Update(cursos);
+                tareaServicio.Update(tareas);
                 return RedirectToAction("Index");
             }
             catch
@@ -78,26 +71,20 @@ namespace PlataformaDigital.Controllers
             }
         }
 
-        // GET: Cursos/Delete/5
+        // GET: Tareas/Delete/5
         public ActionResult Delete(int id)
         {
-            return View(cursoServicio.GetById(id));
+            return View(tareaServicio.GetById(id));
         }
 
-        // POST: Cursos/Delete/5
+        // POST: Tareas/Delete/5
         [HttpPost]
-        public ActionResult Delete(Cursos curso)
+        public ActionResult Delete(int id, FormCollection collection)
         {
             try
             {
                 // TODO: Add delete logic here
-
-                var entity = cursoServicio.GetById(curso.Id);
-                if (entity == null)
-                {
-                    return HttpNotFound();
-                }
-                cursoServicio.Delete(entity.Id);
+                tareaServicio.Delete(id);
                 return RedirectToAction("Index");
             }
             catch

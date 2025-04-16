@@ -1,0 +1,64 @@
+﻿@model CapaDatos.Database.Entregables
+
+@{
+    ViewBag.Title = "Nuevo Entregable";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">
+                <i class="fas fa-file-upload me-2"></i>@ViewBag.Title
+            </h3>
+        </div>
+
+        <div class="card-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            @Html.LabelFor(model => model.TareaId, "Tarea", htmlAttributes: new { @class = "form-label" })
+                            @Html.DropDownList("TareaId", null, "-- Seleccione Tarea --", new { @class = "form-select" })
+                        </div>
+
+                        <div class="mb-3">
+                            @Html.LabelFor(model => model.EstudianteId, "Estudiante", htmlAttributes: new { @class = "form-label" })
+                            @Html.DropDownList("EstudianteId", null, "-- Seleccione Estudiante --", new { @class = "form-select" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            @Html.LabelFor(model => model.NombreDocumento, htmlAttributes: new { @class = "form-label" })
+                            @Html.EditorFor(model => model.NombreDocumento, new { htmlAttributes = new { @class = "form-control", placeholder = "Nombre del archivo" } })
+                        </div>
+
+                        <div class="mb-3">
+                            @Html.LabelFor(model => model.Extension, htmlAttributes: new { @class = "form-label" })
+                            @Html.EditorFor(model => model.Extension, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: .pdf, .docx" } })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            @Html.LabelFor(model => model.FechaCreacion, htmlAttributes: new { @class = "form-label" })
+                            @Html.EditorFor(model => model.FechaCreacion, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                    @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-outline-secondary" })
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save me-1"></i> Guardar
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

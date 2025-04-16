@@ -46,16 +46,9 @@
     <Compile Include="Acciones\EstudiantesServicio.cs" />
     <Compile Include="Acciones\CalificacionServicio.cs" />
     <Compile Include="Acciones\CursoServicio.cs" />
-    <Compile Include="Acciones\EntregaServicio.cs" />
-    <Compile Include="Acciones\EventoCalendarioServicio.cs" />
-    <Compile Include="Acciones\ForoServicio.cs" />
-    <Compile Include="Acciones\MatriculaServicio.cs" />
-    <Compile Include="Acciones\MensajeForoServicio.cs" />
-    <Compile Include="Acciones\NotificacionServicio.cs" />
+    <Compile Include="Acciones\EntregableServicio.cs" />
     <Compile Include="Acciones\ProfesorServicio.cs" />
-    <Compile Include="Acciones\RecursoServicio.cs" />
     <Compile Include="Acciones\TareaServicio.cs" />
-    <Compile Include="Acciones\TemaServicio.cs" />
     <Compile Include="Acciones\TipoUsuarioServicio.cs" />
     <Compile Include="Acciones\UsuariosServicio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

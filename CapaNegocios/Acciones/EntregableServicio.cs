@@ -8,32 +8,32 @@ using CapaDatos.Database;
 
 namespace CapaNegocios.Acciones
 {
-    public class TareaServicio
+    public class EntregableServicio
     {
-        TareasDatos data = new TareasDatos();
+        EntregablesDatos data = new EntregablesDatos();
 
-        public List<Tareas> GetTareas()
+        public List<Entregables> GetEntregables()
         {
-            return data.GetTareas();
+            return data.GetEntregables();
         }
 
-        public void Add(Tareas tareas)
+        public void Add(Entregables entregables)
         {
-            data.Add(tareas);
+            data.Add(entregables);
         }
 
         public void Delete(int id)
         {
             data.Delete(id);
         }
-        public Tareas GetById(int id)
+        public Entregables GetById(int id)
         {
             return data.GetById(id);
         }
 
-        public void Update(Tareas tareas)
+        public void Update(Entregables  entregables)
         {
-            data.Update(tareas);
+            data.Update(entregables);
         }
     }
 }

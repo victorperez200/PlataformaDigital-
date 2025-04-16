@@ -56,7 +56,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Clases\CursosDatos.cs" />
+    <Compile Include="Clases\CursosEstudiantes.cs" />
+    <Compile Include="Clases\EntregablesDatos.cs" />
+    <Compile Include="Clases\EstudianteDatos.cs" />
     <Compile Include="Clases\ProfesorDatos.cs" />
+    <Compile Include="Clases\TareasDatos.cs" />
     <Compile Include="Clases\TipoUsuarioDatos.cs" />
     <Compile Include="Clases\UsuariosDatos.cs" />
     <Compile Include="Database\Cursos.cs">

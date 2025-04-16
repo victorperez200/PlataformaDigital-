@@ -1,14 +1,14 @@
-﻿@model CapaDatos.Database.Usuarios
+﻿@model CapaDatos.Database.Tareas
 
 @{
-    ViewBag.Title = "Nuevo Usuario";
+    ViewBag.Title = "Crear Nueva Tarea";
 }
 
 <div class="container mt-4">
     <div class="card shadow-sm">
         <div class="card-header bg-primary text-white">
             <h3 class="mb-0">
-                <i class="fas fa-user-plus me-2"></i>@ViewBag.Title
+                <i class="fas fa-plus-circle me-2"></i>@ViewBag.Title
             </h3>
         </div>
 
@@ -25,29 +25,25 @@
                         </div>
 
                         <div class="mb-3">
-                            @Html.LabelFor(model => model.Apellido, htmlAttributes: new { @class = "form-label" })
-                            @Html.EditorFor(model => model.Apellido, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "form-label" })
+                            @Html.TextAreaFor(model => model.Descripcion, new { @class = "form-control", rows = "3" })
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="mb-3">
-                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "form-label" })
-                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.LabelFor(model => model.FechaCreacion, htmlAttributes: new { @class = "form-label" })
+                            @Html.EditorFor(model => model.FechaCreacion, new { htmlAttributes = new { @class = "form-control", type = "date" } })
                         </div>
 
                         <div class="mb-3">
-                            @Html.LabelFor(model => model.Contrasena, htmlAttributes: new { @class = "form-label" })
-                            @Html.TextBoxFor(model => model.Contrasena, new { @class = "form-control", type = "password" })
+                            @Html.LabelFor(model => model.FechaVencimiento, htmlAttributes: new { @class = "form-label" })
+                            @Html.EditorFor(model => model.FechaVencimiento, new { htmlAttributes = new { @class = "form-control", type = "date" } })
                         </div>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-12">
                         <div class="mb-3">
-                            <label class="form-label">Tipo de Usuario</label>
-                            @Html.DropDownList("TipoUsuarioId", (SelectList)ViewData["TiposUsuarios"], "-- Seleccione --", new { @class = "form-select" })
+                            @Html.LabelFor(model => model.CursoId, "Curso", htmlAttributes: new { @class = "form-label" })
+                            @Html.DropDownList("CursoId", null, "-- Seleccione Curso --", new { @class = "form-select" })
                         </div>
                     </div>
                 </div>
@@ -55,7 +51,7 @@
                 <div class="d-flex justify-content-between mt-4">
                     @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-outline-secondary" })
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save me-1"></i> Crear Usuario
+                        <i class="fas fa-save me-1"></i> Crear Tarea
                     </button>
                 </div>
             }

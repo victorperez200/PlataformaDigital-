@@ -1,90 +1,68 @@
 ﻿@model CapaDatos.Database.Usuarios
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Eliminar Usuario";
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Usuarios</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Apellido)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Apellido)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Contrasena)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Contrasena)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Activo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Activo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FechaRegistro)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FechaRegistro)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Estudiantes.Matricula)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Estudiantes.Matricula)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TipoUsuarios.Nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TipoUsuarios.Nombre)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm("Delete", "Usuarios", FormMethod.Post))
-    {
-        @Html.AntiForgeryToken()
-        @Html.HiddenFor(model => model.Id)
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-danger" />
-            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+<div class="container mt-4">
+    <div class="card shadow-sm border-danger">
+        <div class="card-header bg-danger text-white">
+            <h3 class="mb-0">
+                <i class="fas fa-user-times me-2"></i>@ViewBag.Title
+            </h3>
         </div>
-    }
+
+        <div class="card-body">
+            <h4 class="text-danger mb-4">¿Está seguro que desea eliminar este usuario?</h4>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="fw-bold">Nombre:</label>
+                        <p>@Html.DisplayFor(model => model.Nombre)</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="fw-bold">Apellido:</label>
+                        <p>@Html.DisplayFor(model => model.Apellido)</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="fw-bold">Email:</label>
+                        <p>@Html.DisplayFor(model => model.Email)</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="fw-bold">Fecha Registro:</label>
+                        <p>@Html.DisplayFor(model => model.FechaRegistro)</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="fw-bold">Matrícula:</label>
+                        <p>@Html.DisplayFor(model => model.Estudiantes.Matricula)</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="fw-bold">Tipo Usuario:</label>
+                        <p>@Html.DisplayFor(model => model.TipoUsuarios.Nombre)</p>
+                    </div>
+                </div>
+            </div>
+
+            @using (Html.BeginForm("Delete", "Usuarios", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.Id)
+
+                <div class="d-flex justify-content-between mt-4">
+                    @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-outline-secondary" })
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash-alt me-1"></i> Eliminar
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
 </div>
